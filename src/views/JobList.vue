@@ -32,7 +32,7 @@
             </div>
           </div>
           <div class="action-buttons">
-            <button @click="editJob(job)">Edit</button>
+            <button @click="navigateToUpdateJob(job._id)">Edit</button>
             <button @click="deleteJob(job._id)">Delete</button>
           </div>
         </div>
@@ -59,6 +59,9 @@ export default {
       const timeDifference = currentDate - postedDate;
       const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
+    },
+    navigateToUpdateJob(jobId) {
+      this.$router.push({ name: 'UpdateJob', params: { id: jobId } });
     },
     async deleteJob(jobId) {
       const authStore = useAuthStore();

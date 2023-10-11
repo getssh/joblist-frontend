@@ -143,7 +143,9 @@ export default {
   padding: 2px 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 12px;
-  background-color: #f9f9f9;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5BA4A4;
+  background-color: rgba(91, 164, 164, 0.1);
 }
 </style>

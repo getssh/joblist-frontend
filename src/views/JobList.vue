@@ -31,6 +31,10 @@
               <span v-for="language in job.languages" :key="language">{{ language }}</span>
             </div>
           </div>
+          <div class="action-buttons">
+            <button @click="editJob(job)">Edit</button>
+            <button @click="deleteJob(job._id)">Delete</button>
+          </div>
         </div>
       </li>
     </ul>
@@ -39,6 +43,7 @@
 
 <script>
 import axios from 'axios';
+import { useAuthStore } from '@/store/auth';
 
 export default {
   name: 'JobList',
@@ -54,6 +59,22 @@ export default {
       const timeDifference = currentDate - postedDate;
       const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
+    },
+    async deleteJob(jobId) {
+      const authStore = useAuthStore();
+      const userToken = authStore.token;
+      if (confirm('Are you sure you want to delete this job?')) {
+        try {
+          await axios.delete(`http://localhost:5000/api/jobs/${jobId}`, {
+            headers: {
+            Authorization: `Bearer ${userToken}`,
+            },
+          });
+          this.jobs = this.jobs.filter((job) => job._id !== jobId);
+        } catch (error) {
+          console.error('Error deleting job', error);
+        }
+      }
     },
   },
   mounted() {

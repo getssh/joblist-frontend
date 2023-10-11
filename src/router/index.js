@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginComponent  from '../views/LoginComponent.vue';
 import JobList from '../views/JobList.vue';
 import AddNewJob from '../views/AddNewJob.vue'
+import UpdateJob from '../views/UpdateJob.vue'
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     path: '/add-job',
     name: 'AddNewJob',
     component: AddNewJob,
+  },
+  {
+    path: '/update-job/:id',
+    name: 'UpdateJob',
+    component: UpdateJob,
   },
 ];
 

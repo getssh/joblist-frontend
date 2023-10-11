@@ -1,13 +1,36 @@
 <template>
-  <div>
+  <div class="job-list">
     <h2>Job List</h2>
     <ul>
       <li v-for="job in jobs" :key="job._id">
-        <div class="job-card">
-          <h3>{{ job.position }}</h3>
-          <p>{{ job.company }}</p>
-          <p>Location: {{ job.location }}</p>
-          <p>Posted At: {{ new Date(job.postedAt).toDateString() }}</p>
+        <div class="job-card" :class="{ featured: job.featured }">
+          <div class="left">
+            <div class="company-logo">
+              <img :src="job.logo" alt="Company Logo" />
+            </div>
+            <div class="company-info">
+              <div class="row">
+                <span>{{ job.company }}</span>
+                <span v-if="job.new" class="new">New</span>
+                <span v-if="job.featured" class="featured">Featured</span>
+              </div>
+              <div class="row">
+                <span>{{ job.position }}</span>
+              </div>
+              <div class="row">
+                <span>{{ new Date(job.postedAt).toDateString() }}</span>
+                <span>{{ job.contract }}</span>
+                <span>{{ job.location }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="right">
+            <div class="details">
+              <span>{{ job.role }}</span>
+              <span>{{ job.level }}</span>
+              <span v-for="language in job.languages" :key="language">{{ language }}</span>
+            </div>
+          </div>
         </div>
       </li>
     </ul>
@@ -38,11 +61,77 @@ export default {
 </script>
 
 <style scoped>
+.job-list {
+  padding: 20px;
+}
+
 .job-card {
+  display: flex;
+  background-color: #fff;
   border: 1px solid #ddd;
-  padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.job-card.featured {
+  border-left: 5px solid #5BA4A4;
+}
+
+.left {
+  display: flex;
+  align-items: flex-start;
+}
+
+.company-logo {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.company-info .row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.company-info .new, .company-info .featured {
+  background-color: #5BA4A4;
+  color: #fff;
+  padding: 2px 5px;
+  margin-left: 5px;
+  border-radius: 2px;
+  font-weight: bold;
+}
+
+.right {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.details span {
+  margin-right: 5px;
+  padding: 2px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 12px;
   background-color: #f9f9f9;
 }
 </style>

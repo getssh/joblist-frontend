@@ -2,7 +2,7 @@
   <div class="job-list">
     <h2>Job List</h2>
     <ul>
-      <li v-for="job in jobs" :key="job._id">
+      <li class="all-jobs" v-for="job in jobs" :key="job._id">
         <div class="job-card" :class="{ featured: job.featured }">
           <div class="left">
             <div class="company-logo">
@@ -18,7 +18,7 @@
                 <span>{{ job.position }}</span>
               </div>
               <div class="row">
-                <span>{{ new Date(job.postedAt).toDateString() }}</span>
+                <span>{{ formatPostedAt(job.postedAt) }}</span>
                 <span>{{ job.contract }}</span>
                 <span>{{ job.location }}</span>
               </div>
@@ -47,6 +47,15 @@ export default {
       jobs: [],
     };
   },
+  methods: {
+    formatPostedAt(postedAt) {
+      const currentDate = new Date();
+      const postedDate = new Date(postedAt);
+      const timeDifference = currentDate - postedDate;
+      const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+      return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
+    },
+  },
   mounted() {
     axios
       .get('http://localhost:5000/api/jobs/')
@@ -65,13 +74,16 @@ export default {
   padding: 20px;
 }
 
+.all-jobs {
+  list-style-type: none;
+}
 .job-card {
   display: flex;
   background-color: #fff;
   border: 1px solid #ddd;
   margin: 10px 0;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
 

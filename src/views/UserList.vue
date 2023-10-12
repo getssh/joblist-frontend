@@ -11,8 +11,8 @@
             <p><strong>Role:</strong> {{ user.role }}</p>
           </div>
           <div v-if="isAuthenticated && isSuperAdmin" class="action-buttons">
-            <button @click="navigateToUpdateJob(user._id)">Edit</button>
-            <button @click="deleteJob(user._id)">Delete</button>
+            <button @click="navigateToUpdateUser(user._id)">Edit</button>
+            <button @click="deleteUser(user._id)">Delete</button>
           </div>
         </div>
       </li>
@@ -44,10 +44,10 @@ export default {
     },
   },
   methods: {
-    // navigateToUpdateJob(jobId) {
-    //   this.$router.push({ name: 'UpdateJob', params: { id: jobId } });
-    // },
-    async deleteJob(userId) {
+    navigateToUpdateUser(userId) {
+      this.$router.push({ name: 'UpdateUser', params: { id: userId } });
+    },
+    async deleteUser(userId) {
       const authStore = useAuthStore();
       const userToken = authStore.token;
       if (confirm('Are you sure you want to delete this job?')) {

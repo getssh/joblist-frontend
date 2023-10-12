@@ -5,6 +5,7 @@ import AddNewJob from '../views/AddNewJob.vue'
 import UpdateJob from '../views/UpdateJob.vue'
 import UserList from '../views/UserList.vue'
 import AddNewUser from '../views/AddNewUser.vue'
+import UpdateUser from '../views/UpdateUser.vue'
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     path: '/new-user',
     name: 'AddNewUser',
     component: AddNewUser,
+  },
+  {
+    path: '/update-user/:id',
+    name: 'UpdateUser',
+    component: UpdateUser,
   },
 ];
 

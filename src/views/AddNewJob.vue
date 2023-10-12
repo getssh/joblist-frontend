@@ -1,5 +1,5 @@
 <template>
-  <div class="add-job">
+  <div v-if="isAuthenticated && isSuperAdmin" class="add-job">
     <h2>Add New Job</h2>
     <p v-if="jobCreationMessage">{{ jobCreationMessage }}</p>
     <form @submit.prevent="createJob" class="form">
@@ -88,6 +88,18 @@ export default {
       },
       jobCreationMessage: '',
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return useAuthStore().token !== '';
+    },
+    isAdminOrSuperAdmin() {
+      const role = useAuthStore().role;
+      return role === 'admin' || role === 'superadmin';
+    },
+    isSuperAdmin() {
+      return useAuthStore().role === 'superadmin';
+    },
   },
   methods: {
     createJob() {

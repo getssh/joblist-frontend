@@ -1,5 +1,5 @@
 <template>
-  <div class="add-job">
+  <div v-if="isAuthenticated && isSuperAdmin" class="add-job">
     <h2>Add New Job</h2>
     <p v-if="userCreationMessage">{{ userCreationMessage }}</p>
     <form @submit.prevent="createUser" class="form">
@@ -32,6 +32,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { useAuthStore } from '@/store/auth';
 
 export default {
   data() {
@@ -44,6 +45,18 @@ export default {
       },
       userCreationMessage: '',
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return useAuthStore().token !== '';
+    },
+    isAdminOrSuperAdmin() {
+      const role = useAuthStore().role;
+      return role === 'admin' || role === 'superadmin';
+    },
+    isSuperAdmin() {
+      return useAuthStore().role === 'superadmin';
+    },
   },
   methods: {
     createUser() {

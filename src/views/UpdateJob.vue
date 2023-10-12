@@ -1,5 +1,5 @@
 <template>
-  <div class="update-job">
+  <div v-if="isAuthenticated && isSuperAdmin" class="update-job">
     <h2>Edit Job</h2>
     <form @submit.prevent="updateJob">
       <div class="form-group">
@@ -61,6 +61,18 @@ export default {
       editedJob: {},
       jobUpdateMessage: '',
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return useAuthStore().token !== '';
+    },
+    isAdminOrSuperAdmin() {
+      const role = useAuthStore().role;
+      return role === 'admin' || role === 'superadmin';
+    },
+    isSuperAdmin() {
+      return useAuthStore().role === 'superadmin';
+    },
   },
   methods: {
     updateJob() {

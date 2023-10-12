@@ -1,5 +1,5 @@
 <template>
-  <div class="user-list">
+  <div v-if="isAuthenticated && isSuperAdmin" class="user-list">
     <h2>User List</h2>
     <router-link v-if="isAuthenticated && isSuperAdmin" to="/new-user" class="nav-link">Add New User</router-link>
     <ul>

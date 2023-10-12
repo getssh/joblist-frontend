@@ -145,6 +145,8 @@ label {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: left;
+  padding-left: 10px;
 }
 
 input[type="text"] {

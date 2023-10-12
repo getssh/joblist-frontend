@@ -121,4 +121,12 @@ ul {
   font-weight: 500;
   margin-left: 5px;
 }
+
+.nav-link {
+  background-color: #4acd85;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
 </style>

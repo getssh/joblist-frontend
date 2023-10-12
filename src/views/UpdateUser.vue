@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAuthenticated && isSuperAdmin" class="update-job">
+  <div v-if="isAuthenticated && isSuperAdmin" class="update-user">
     <h2>Edit Job</h2>
     <form @submit.prevent="updateUser">
         <div class="form-group">
@@ -96,3 +96,60 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.update-user {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  padding-left: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+button {
+  background-color: #5BA4A4;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3E7E7E;
+}
+</style>

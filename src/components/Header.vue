@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <router-link v-if="isAuthenticated" to="/jobs" class="nav-link">JobList</router-link>
-    <router-link v-if="isAuthenticated" to="/add-job" class="nav-link">Add New Job</router-link>
+    <!-- <router-link v-if="isAuthenticated && isAdminOrSuperAdmin" to="/add-job" class="nav-link">Add New Job</router-link> -->
     <router-link v-if="isSuperAdmin" to="/users" class="nav-link">Users</router-link>
     <router-link v-if="!isAuthenticated" to="/login" class="nav-link">Login</router-link>
     <button v-if="isAuthenticated" @click="logout" class="nav-link">Logout</button>

@@ -1,7 +1,7 @@
 <template>
   <div class="user-list">
     <h2>User List</h2>
-    <router-link v-if="isAuthenticated && isSuperAdmin" to="/add-job" class="nav-link">Add New User</router-link>
+    <router-link v-if="isAuthenticated && isSuperAdmin" to="/new-user" class="nav-link">Add New User</router-link>
     <ul>
       <li class="all-users" v-for="user in users" :key="user._id">
         <div class="user-card">
@@ -52,7 +52,7 @@ export default {
       const userToken = authStore.token;
       if (confirm('Are you sure you want to delete this job?')) {
         try {
-          await axios.delete(`http://localhost:5000/api/jobs/${userId}`, {
+          await axios.delete(`http://localhost:5000/api/users/${userId}`, {
             headers: {
             Authorization: `Bearer ${userToken}`,
             },

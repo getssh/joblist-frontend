@@ -12,7 +12,7 @@
       </div>
       <div class="form-group">
           <label for="new">New</label>
-          <input v-model="job.new" type="checkbox" id="new" />
+          <input v-model="editedJob.new" type="checkbox" id="new" />
         </div>
         <div class="form-group">
           <label for="featured">Featured</label>

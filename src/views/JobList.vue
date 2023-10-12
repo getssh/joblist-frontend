@@ -172,4 +172,20 @@ export default {
   color: #5BA4A4;
   background-color: rgba(91, 164, 164, 0.1);
 }
+
+.action-buttons button {
+  background-color: #4acd85;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 50%;
+}
+
+.action-buttons button:last-child {
+  background-color: red;
+  font-weight: 500;
+  margin-left: 5px;
+}
 </style>

@@ -2,8 +2,22 @@
   <div class="job-list">
     <h2>Job List</h2>
     <router-link v-if="isAuthenticated && isAdminOrSuperAdmin" to="/add-job" class="nav-link">Add New Job</router-link>
+    <div class="sort-dropdown">
+      <label for="sortSelect">Sort by</label>
+      <select class="select-box" id="sortSelect" v-model="selectedSort" @change="updateSort">
+        <option value="position">Position</option>
+        <option value="company">Company</option>
+        <option value="location">Location</option>
+        <option value="postedAt">Posted At</option>
+      </select>
+      <label for="sortOrder">Sort order</label>
+      <select class="select-box" id="sortOrder" v-model="selectedSortOrder" @change="updateSort">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
     <ul>
-      <li class="all-jobs" v-for="job in jobs" :key="job._id">
+      <li class="all-jobs" v-for="job in sortedJobs" :key="job._id">
         <div class="job-card" :class="{ featured: job.featured }">
           <div class="left">
             <div class="company-logo">
@@ -51,6 +65,8 @@ export default {
   data() {
     return {
       jobs: [],
+      selectedSort: 'position',
+      selectedSortOrder: 'asc',
     };
   },
   computed: {
@@ -64,6 +80,17 @@ export default {
     isSuperAdmin() {
       return useAuthStore().role === 'superadmin';
     },
+    sortedJobs() {
+      return this.jobs.slice().sort((a, b) => {
+        const sortOrder = this.selectedSortOrder === 'asc' ? 1 : -1;
+
+        if (this.selectedSort === 'postedAt') {
+          return sortOrder * (new Date(a.postedAt) - new Date(b.postedAt));
+        } else {
+          return sortOrder * (a[this.selectedSort] < b[this.selectedSort] ? -1 : 1);
+        }
+      });
+    },
   },
   methods: {
     formatPostedAt(postedAt) {
@@ -72,6 +99,9 @@ export default {
       const timeDifference = currentDate - postedDate;
       const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
       return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
+    },
+    updateSort() {
+    console.log('selectedSort:', this.selectedSort);
     },
     navigateToUpdateJob(jobId) {
       this.$router.push({ name: 'UpdateJob', params: { id: jobId } });
@@ -208,5 +238,25 @@ export default {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+}
+.sort-dropdown {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.select-box {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+  background-color: #fff;
+  width: 150px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.sort-dropdown label {
+  font-weight: bold;
+  margin-right: 10px;
 }
 </style>

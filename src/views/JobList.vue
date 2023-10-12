@@ -1,6 +1,7 @@
 <template>
   <div class="job-list">
     <h2>Job List</h2>
+    <router-link v-if="isAuthenticated && isAdminOrSuperAdmin" to="/add-job" class="nav-link">Add New Job</router-link>
     <ul>
       <li class="all-jobs" v-for="job in jobs" :key="job._id">
         <div class="job-card" :class="{ featured: job.featured }">
@@ -31,7 +32,7 @@
               <span v-for="language in job.languages" :key="language">{{ language }}</span>
             </div>
           </div>
-          <div class="action-buttons">
+          <div v-if="isAuthenticated && isAdminOrSuperAdmin" class="action-buttons">
             <button @click="navigateToUpdateJob(job._id)">Edit</button>
             <button @click="deleteJob(job._id)">Delete</button>
           </div>
@@ -51,6 +52,18 @@ export default {
     return {
       jobs: [],
     };
+  },
+  computed: {
+    isAuthenticated() {
+      return useAuthStore().token !== '';
+    },
+    isAdminOrSuperAdmin() {
+      const role = useAuthStore().role;
+      return role === 'admin' || role === 'superadmin';
+    },
+    isSuperAdmin() {
+      return useAuthStore().role === 'superadmin';
+    },
   },
   methods: {
     formatPostedAt(postedAt) {

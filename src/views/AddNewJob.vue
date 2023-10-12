@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAuthenticated && isSuperAdmin" class="add-job">
+  <div v-if="isAuthenticated" class="add-job">
     <h2>Add New Job</h2>
     <p v-if="jobCreationMessage">{{ jobCreationMessage }}</p>
     <form @submit.prevent="createJob" class="form">

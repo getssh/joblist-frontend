@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isAuthenticated && isSuperAdmin" class="update-job">
+  <div v-if="isAuthenticated" class="update-job">
     <h2>Edit Job</h2>
     <form @submit.prevent="updateJob">
       <div class="form-group">

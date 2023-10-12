@@ -11,7 +11,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useAuthStore } from '@/store/auth';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'HeaderComponent',
@@ -28,14 +28,10 @@ export default defineComponent({
     },
   },
   methods: {
-    logout() {
+      logout() {
       const authStore = useAuthStore();
       authStore.clearToken();
-      // const router = useRouter();
-      const router = useRouter();
-      if (router && router.push) {
-        router.push('/login');
-      }
+      this.$router.push('/login');
     },
   },
 });
@@ -45,7 +41,7 @@ export default defineComponent({
 .header {
   background-color: #5ba4a4;
   color: #fff;
-  padding: 10px;
+  padding: 25px;
   display: flex;
   justify-content: flex-end;
 }
@@ -54,6 +50,7 @@ export default defineComponent({
   color: #fff;
   text-decoration: none;
   margin-right: 10px;
+  font-size: 18px;
 }
 
 button.nav-link {

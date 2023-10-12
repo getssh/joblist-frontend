@@ -33,14 +33,14 @@
             </div>
             <div class="company-info">
               <div class="row">
-                <span>{{ job.company }}</span>
+                <span class="company-name">{{ job.company }}</span>
                 <span v-if="job.new" class="new">New</span>
                 <span v-if="job.featured" class="featured">Featured</span>
               </div>
               <div class="row">
-                <span>{{ job.position }}</span>
+                <span class="job-position">{{ job.position }}</span>
               </div>
-              <div class="row">
+              <div class="row timedate">
                 <span>{{ formatPostedAt(job.postedAt) }}</span>
                 <span>{{ job.contract }}</span>
                 <span>{{ job.location }}</span>
@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       jobs: [],
-      selectedSort: 'company',
+      selectedSort: 'postedAt',
       selectedSortOrder: 'asc',
       filterKeyword: '',
     };
@@ -302,5 +302,17 @@ input[type="text"] {
   flex-direction: column;
   align-items: end;
   margin: 0 150px 10px 0;
+}
+
+.timedate>* {
+  padding-right: 10px;
+}
+.company-name {
+  color: #5BA4A4;
+  font-weight: bold;
+}
+
+.job-position {
+  font-weight: bold;
 }
 </style>

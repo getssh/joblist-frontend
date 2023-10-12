@@ -2,6 +2,14 @@
   <div class="job-list">
     <h2>Job List</h2>
     <router-link v-if="isAuthenticated && isAdminOrSuperAdmin" to="/add-job" class="nav-link">Add New Job</router-link>
+    <div class="filter-box">
+      <div class="filter-input">
+        <input v-model="filterKeyword" type="text" placeholder="Filter by position, company, or location" @input="applyFilter" />
+      </div>
+      <div class="filter-button">
+        <button @click="applyFilter" class="fitler-button">Filter</button>
+      </div>
+    </div>
     <div class="sort-dropdown">
       <label for="sortSelect">Sort by</label>
       <select class="select-box" id="sortSelect" v-model="selectedSort" @change="updateSort">
@@ -65,8 +73,9 @@ export default {
   data() {
     return {
       jobs: [],
-      selectedSort: 'position',
+      selectedSort: 'company',
       selectedSortOrder: 'asc',
+      filterKeyword: '',
     };
   },
   computed: {
@@ -91,6 +100,15 @@ export default {
         }
       });
     },
+    filteredJobs() {
+      const keyword = this.filterKeyword.toLowerCase();
+      return this.sortedJobs.filter(job => {
+        const position = job.position.toLowerCase();
+        const company = job.company.toLowerCase();
+        const location = job.location.toLowerCase();
+        return position.includes(keyword) || company.includes(keyword) || location.includes(keyword);
+      });
+    },
   },
   methods: {
     formatPostedAt(postedAt) {
@@ -101,7 +119,10 @@ export default {
       return `${daysAgo} day${daysAgo === 1 ? '' : 's'} ago`;
     },
     updateSort() {
-    console.log('selectedSort:', this.selectedSort);
+      console.log('selectedSort:', this.selectedSort);
+    },
+    applyFilter() {
+      this.jobs = this.filteredJobs;
     },
     navigateToUpdateJob(jobId) {
       this.$router.push({ name: 'UpdateJob', params: { id: jobId } });
@@ -162,7 +183,6 @@ export default {
   display: flex;
   align-items: flex-start;
 }
-
 .company-logo {
   border-radius: 50%;
   overflow: hidden;
@@ -258,5 +278,29 @@ export default {
 .sort-dropdown label {
   font-weight: bold;
   margin-right: 10px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.fitler-button {
+  background-color: #5BA4A4;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-right: 50px;
+}
+.filter-box {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin: 0 150px 10px 0;
 }
 </style>
